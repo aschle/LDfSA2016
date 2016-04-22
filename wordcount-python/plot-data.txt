@@ -1,8 +1,8 @@
 count   2341577
-den 1304087
-denna   22441
-denne   3961
-det 523356
-han 763857
-hen 32473
-hon 348843
+den 1347477
+denna   22620
+denne   4008
+det 533985
+han 773750
+hen 34407
+hon 359152

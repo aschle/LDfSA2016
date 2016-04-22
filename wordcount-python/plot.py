@@ -1,7 +1,7 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
 # Sign in to plotly
-py.sign_in('###', '###') # Replace the username, and API key with your credentials.
+py.sign_in('XXX', 'XXX') # Replace the username, and API key with your credentials.
 
 # read data which is going to be plottet from file
 with open("plot-data.txt") as f:
@@ -25,10 +25,12 @@ ylist = map(relative, ylist)
 trace = go.Bar(x=xlist, y=ylist)
 data = [trace]
 layout = go.Layout(
-  title='Distribution of Swedish pronouns',
   width=800,
   height=640,
-  yaxis=dict(range=[0, 100])
+  yaxis=dict(
+    range=[0, 100],
+    title='Occurences in Percent'
+  )
 )
 
 fig = go.Figure(data=data, layout=layout)

@@ -12,11 +12,11 @@ CREATE EXTERNAL TABLE tweets
 ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
 LOCATION '/user/ubuntu/titter_db';
 
-LOAD DATA INPATH '/user/ubuntu/test-data/tweets_0.txt' OVERWRITE INTO TABLE tweets;
+LOAD DATA INPATH '/user/ubuntu/data/tweets_0.txt' OVERWRITE INTO TABLE tweets;
 
-SELECT count(*) FROM tweets;
+SELECT count( DISTINCT id) FROM tweets;
 
-SELECT count(*) FROM tweets WHERE
+SELECT count(id) FROM tweets WHERE
   id IS NOT NULL AND
   retweeted_status IS NULL;
 
@@ -85,17 +85,21 @@ SELECT word, COUNT(*)
 FROM tweets
 LATERAL VIEW explode(
   split(
-    regexp_replace(text, "[^a-zA-Z]", " "),
+    regexp_replace(
+      lower(text),
+      "[^a-z]",
+      " "
+    ),
     ' ')
   ) lTable as word
 WHERE retweeted_status IS NULL AND
-  word LIKE 'den' OR
-  word LIKE 'denna' OR
-  word LIKE 'denne' OR
-  word LIKE 'det' OR
-  word LIKE 'han' OR
-  word LIKE 'hen' OR
-  word LIKE 'hon' 
+  word = 'den' OR
+  word = 'denna' OR
+  word = 'denne' OR
+  word = 'det' OR
+  word = 'han' OR
+  word = 'hen' OR
+  word = 'hon' 
 GROUP BY word;
 ####################
 

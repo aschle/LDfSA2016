@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-"""A more advanced Mapper, using Python iterators and generators."""
 
 import sys
 import json
+import re
 
 def read_input(file):
   global count
@@ -16,10 +16,11 @@ def read_input(file):
       if not data.get("retweeted_status"):
         count = count + 1
         text = json.dumps(data["text"])
+        text = text.lower()
+        text = re.sub('[^a-z]', ' ', text)
         text = text.split()
         for s in text:
-          value = '@:*!?,."();-+=[]{}|/\\'
-          snippet = s.lower().rstrip(value).lstrip(value)
+          snippet = s.strip()
           # look for substring (han, hon, den, det, denna, denne, hen)
           if (("han" == snippet) or ("hon" == snippet) or("den" == snippet) or ("det" == snippet) or ("denna" == snippet) or ("denne" == snippet) or ("hen" == snippet)):
             yield snippet
